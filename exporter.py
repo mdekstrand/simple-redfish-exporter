@@ -1,12 +1,7 @@
 # pyright: basic
-import sys
 import os
 import io
-import time
-import csv
-from typing import Any
 import warnings
-import select
 from dataclasses import dataclass, field, fields
 
 import requests
@@ -30,9 +25,9 @@ class Metric:
 @dataclass
 class Measurement:
     redfish_psu_present: Metric = field(default_factory=lambda: Metric('Whether the PSU is active'))
-    redfish_psu_input_power: Metric = field(default_factory=lambda: Metric('Instantaneous output power (watts)'))
+    redfish_psu_input_power_watts: Metric = field(default_factory=lambda: Metric('Instantaneous output power (watts)'))
     redfish_psu_line_voltage: Metric = field(default_factory=lambda: Metric('Current line input voltage'))
-    redfish_psu_output_power: Metric = field(default_factory=lambda: Metric('Instantaneous output power (watts)'))
+    redfish_psu_output_power_watts: Metric = field(default_factory=lambda: Metric('Instantaneous output power (watts)'))
     redfish_psu_output_voltage: Metric = field(default_factory=lambda: Metric('Current output voltage'))
     redfish_psu_temperature: Metric = field(default_factory=lambda: Metric('Power supply temperature'))
 
@@ -55,8 +50,8 @@ def metrics():
 
         metrics.redfish_psu_present.values.append((key, 1))
         metrics.redfish_psu_line_voltage.values.append((key, psu.LineInputVoltage))
-        metrics.redfish_psu_input_power.values.append((key, psu.PowerInputWatts))
-        metrics.redfish_psu_output_power.values.append((key, psu.PowerOutputWatts))
+        metrics.redfish_psu_input_power_watts.values.append((key, psu.PowerInputWatts))
+        metrics.redfish_psu_output_power_watts.values.append((key, psu.PowerOutputWatts))
         metrics.redfish_psu_output_voltage.values.append((key, psu.PowerOutputVoltage))
         metrics.redfish_psu_temperature.values.append((key, psu.PowerTemperature))
 
