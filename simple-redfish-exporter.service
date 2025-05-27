@@ -1,0 +1,12 @@
+[Unit]
+Description=Simple Redfish exporter for Prometheus
+
+[Service]
+Type=simple
+WorkingDirectory=%h/src/simple-redfish-exporter
+ExecStart=%h/src/simple-redfish-exporter/.venv/bin/waitress-serve exporter:app
+Environment=IKVM_HOST=192.168.1.202
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
